@@ -563,17 +563,17 @@ class t_libro_add extends t_libro
 		$CurrentForm = new HttpForm();
 		$this->CurrentAction = Param("action"); // Set up current action
 		$this->Id_libro->Visible = FALSE;
-		$this->Codigo_Libro->setVisibility();
+		$this->Codigo_Libro->Visible = FALSE;
 		$this->Titulo->setVisibility();
 		$this->Autor->setVisibility();
 		$this->Editorial->setVisibility();
 		$this->Fecha_publicacion->setVisibility();
 		$this->Edicion->setVisibility();
 		$this->Area->setVisibility();
+		$this->Codigo_Area->setVisibility();
 		$this->Categoria->setVisibility();
 		$this->Palabras_Claves->setVisibility();
 		$this->N_copias->setVisibility();
-		$this->Codigo_Area->Visible = FALSE;
 		$this->hideFieldsForAddEdit();
 
 		// Global Page Loading event (in userfn*.php)
@@ -715,14 +715,14 @@ class t_libro_add extends t_libro
 		$this->Edicion->OldValue = $this->Edicion->CurrentValue;
 		$this->Area->CurrentValue = NULL;
 		$this->Area->OldValue = $this->Area->CurrentValue;
+		$this->Codigo_Area->CurrentValue = NULL;
+		$this->Codigo_Area->OldValue = $this->Codigo_Area->CurrentValue;
 		$this->Categoria->CurrentValue = NULL;
 		$this->Categoria->OldValue = $this->Categoria->CurrentValue;
 		$this->Palabras_Claves->CurrentValue = NULL;
 		$this->Palabras_Claves->OldValue = $this->Palabras_Claves->CurrentValue;
 		$this->N_copias->CurrentValue = NULL;
 		$this->N_copias->OldValue = $this->N_copias->CurrentValue;
-		$this->Codigo_Area->CurrentValue = NULL;
-		$this->Codigo_Area->OldValue = $this->Codigo_Area->CurrentValue;
 	}
 
 	// Load form values
@@ -731,15 +731,6 @@ class t_libro_add extends t_libro
 
 		// Load from form
 		global $CurrentForm;
-
-		// Check field name 'Codigo_Libro' first before field var 'x_Codigo_Libro'
-		$val = $CurrentForm->hasValue("Codigo_Libro") ? $CurrentForm->getValue("Codigo_Libro") : $CurrentForm->getValue("x_Codigo_Libro");
-		if (!$this->Codigo_Libro->IsDetailKey) {
-			if (IsApi() && $val == NULL)
-				$this->Codigo_Libro->Visible = FALSE; // Disable update for API request
-			else
-				$this->Codigo_Libro->setFormValue($val);
-		}
 
 		// Check field name 'Titulo' first before field var 'x_Titulo'
 		$val = $CurrentForm->hasValue("Titulo") ? $CurrentForm->getValue("Titulo") : $CurrentForm->getValue("x_Titulo");
@@ -796,6 +787,15 @@ class t_libro_add extends t_libro
 				$this->Area->setFormValue($val);
 		}
 
+		// Check field name 'Codigo_Area' first before field var 'x_Codigo_Area'
+		$val = $CurrentForm->hasValue("Codigo_Area") ? $CurrentForm->getValue("Codigo_Area") : $CurrentForm->getValue("x_Codigo_Area");
+		if (!$this->Codigo_Area->IsDetailKey) {
+			if (IsApi() && $val == NULL)
+				$this->Codigo_Area->Visible = FALSE; // Disable update for API request
+			else
+				$this->Codigo_Area->setFormValue($val);
+		}
+
 		// Check field name 'Categoria' first before field var 'x_Categoria'
 		$val = $CurrentForm->hasValue("Categoria") ? $CurrentForm->getValue("Categoria") : $CurrentForm->getValue("x_Categoria");
 		if (!$this->Categoria->IsDetailKey) {
@@ -831,7 +831,6 @@ class t_libro_add extends t_libro
 	public function restoreFormValues()
 	{
 		global $CurrentForm;
-		$this->Codigo_Libro->CurrentValue = $this->Codigo_Libro->FormValue;
 		$this->Titulo->CurrentValue = $this->Titulo->FormValue;
 		$this->Autor->CurrentValue = $this->Autor->FormValue;
 		$this->Editorial->CurrentValue = $this->Editorial->FormValue;
@@ -839,6 +838,7 @@ class t_libro_add extends t_libro
 		$this->Fecha_publicacion->CurrentValue = UnFormatDateTime($this->Fecha_publicacion->CurrentValue, 0);
 		$this->Edicion->CurrentValue = $this->Edicion->FormValue;
 		$this->Area->CurrentValue = $this->Area->FormValue;
+		$this->Codigo_Area->CurrentValue = $this->Codigo_Area->FormValue;
 		$this->Categoria->CurrentValue = $this->Categoria->FormValue;
 		$this->Palabras_Claves->CurrentValue = $this->Palabras_Claves->FormValue;
 		$this->N_copias->CurrentValue = $this->N_copias->FormValue;
@@ -887,10 +887,10 @@ class t_libro_add extends t_libro
 		$this->Fecha_publicacion->setDbValue($row['Fecha_publicacion']);
 		$this->Edicion->setDbValue($row['Edicion']);
 		$this->Area->setDbValue($row['Area']);
+		$this->Codigo_Area->setDbValue($row['Codigo_Area']);
 		$this->Categoria->setDbValue($row['Categoria']);
 		$this->Palabras_Claves->setDbValue($row['Palabras_Claves']);
 		$this->N_copias->setDbValue($row['N_copias']);
-		$this->Codigo_Area->setDbValue($row['Codigo_Area']);
 	}
 
 	// Return a row with default values
@@ -906,10 +906,10 @@ class t_libro_add extends t_libro
 		$row['Fecha_publicacion'] = $this->Fecha_publicacion->CurrentValue;
 		$row['Edicion'] = $this->Edicion->CurrentValue;
 		$row['Area'] = $this->Area->CurrentValue;
+		$row['Codigo_Area'] = $this->Codigo_Area->CurrentValue;
 		$row['Categoria'] = $this->Categoria->CurrentValue;
 		$row['Palabras_Claves'] = $this->Palabras_Claves->CurrentValue;
 		$row['N_copias'] = $this->N_copias->CurrentValue;
-		$row['Codigo_Area'] = $this->Codigo_Area->CurrentValue;
 		return $row;
 	}
 
@@ -955,10 +955,10 @@ class t_libro_add extends t_libro
 		// Fecha_publicacion
 		// Edicion
 		// Area
+		// Codigo_Area
 		// Categoria
 		// Palabras_Claves
 		// N_copias
-		// Codigo_Area
 
 		if ($this->RowType == ROWTYPE_VIEW) { // View row
 
@@ -1003,6 +1003,7 @@ class t_libro_add extends t_libro
 					if ($rswrk && !$rswrk->EOF) { // Lookup values found
 						$arwrk = array();
 						$arwrk[1] = $rswrk->fields('df');
+						$arwrk[2] = $rswrk->fields('df2');
 						$this->Area->ViewValue = $this->Area->displayValue($arwrk);
 						$rswrk->Close();
 					} else {
@@ -1013,6 +1014,11 @@ class t_libro_add extends t_libro
 				$this->Area->ViewValue = NULL;
 			}
 			$this->Area->ViewCustomAttributes = "";
+
+			// Codigo_Area
+			$this->Codigo_Area->ViewValue = $this->Codigo_Area->CurrentValue;
+			$this->Codigo_Area->ViewValue = FormatNumber($this->Codigo_Area->ViewValue, 0, -2, -2, -2);
+			$this->Codigo_Area->ViewCustomAttributes = "";
 
 			// Categoria
 			$curVal = strval($this->Categoria->CurrentValue);
@@ -1045,11 +1051,6 @@ class t_libro_add extends t_libro
 			$this->N_copias->ViewValue = FormatNumber($this->N_copias->ViewValue, 0, -2, -2, -2);
 			$this->N_copias->ViewCustomAttributes = "";
 
-			// Codigo_Libro
-			$this->Codigo_Libro->LinkCustomAttributes = "";
-			$this->Codigo_Libro->HrefValue = "";
-			$this->Codigo_Libro->TooltipValue = "";
-
 			// Titulo
 			$this->Titulo->LinkCustomAttributes = "";
 			$this->Titulo->HrefValue = "";
@@ -1080,6 +1081,11 @@ class t_libro_add extends t_libro
 			$this->Area->HrefValue = "";
 			$this->Area->TooltipValue = "";
 
+			// Codigo_Area
+			$this->Codigo_Area->LinkCustomAttributes = "";
+			$this->Codigo_Area->HrefValue = "";
+			$this->Codigo_Area->TooltipValue = "";
+
 			// Categoria
 			$this->Categoria->LinkCustomAttributes = "";
 			$this->Categoria->HrefValue = "";
@@ -1095,12 +1101,6 @@ class t_libro_add extends t_libro
 			$this->N_copias->HrefValue = "";
 			$this->N_copias->TooltipValue = "";
 		} elseif ($this->RowType == ROWTYPE_ADD) { // Add row
-
-			// Codigo_Libro
-			$this->Codigo_Libro->EditAttrs["class"] = "form-control";
-			$this->Codigo_Libro->EditCustomAttributes = "";
-			$this->Codigo_Libro->EditValue = HtmlEncode($this->Codigo_Libro->CurrentValue);
-			$this->Codigo_Libro->PlaceHolder = RemoveHtml($this->Codigo_Libro->caption());
 
 			// Titulo
 			$this->Titulo->EditAttrs["class"] = "form-control";
@@ -1155,6 +1155,12 @@ class t_libro_add extends t_libro
 				$this->Area->EditValue = $arwrk;
 			}
 
+			// Codigo_Area
+			$this->Codigo_Area->EditAttrs["class"] = "form-control";
+			$this->Codigo_Area->EditCustomAttributes = "";
+			$this->Codigo_Area->EditValue = HtmlEncode($this->Codigo_Area->CurrentValue);
+			$this->Codigo_Area->PlaceHolder = RemoveHtml($this->Codigo_Area->caption());
+
 			// Categoria
 			$this->Categoria->EditAttrs["class"] = "form-control";
 			$this->Categoria->EditCustomAttributes = "";
@@ -1191,12 +1197,8 @@ class t_libro_add extends t_libro
 			$this->N_copias->PlaceHolder = RemoveHtml($this->N_copias->caption());
 
 			// Add refer script
-			// Codigo_Libro
-
-			$this->Codigo_Libro->LinkCustomAttributes = "";
-			$this->Codigo_Libro->HrefValue = "";
-
 			// Titulo
+
 			$this->Titulo->LinkCustomAttributes = "";
 			$this->Titulo->HrefValue = "";
 
@@ -1219,6 +1221,10 @@ class t_libro_add extends t_libro
 			// Area
 			$this->Area->LinkCustomAttributes = "";
 			$this->Area->HrefValue = "";
+
+			// Codigo_Area
+			$this->Codigo_Area->LinkCustomAttributes = "";
+			$this->Codigo_Area->HrefValue = "";
 
 			// Categoria
 			$this->Categoria->LinkCustomAttributes = "";
@@ -1297,6 +1303,14 @@ class t_libro_add extends t_libro
 				AddMessage($FormError, str_replace("%s", $this->Area->caption(), $this->Area->RequiredErrorMessage));
 			}
 		}
+		if ($this->Codigo_Area->Required) {
+			if (!$this->Codigo_Area->IsDetailKey && $this->Codigo_Area->FormValue != NULL && $this->Codigo_Area->FormValue == "") {
+				AddMessage($FormError, str_replace("%s", $this->Codigo_Area->caption(), $this->Codigo_Area->RequiredErrorMessage));
+			}
+		}
+		if (!CheckInteger($this->Codigo_Area->FormValue)) {
+			AddMessage($FormError, $this->Codigo_Area->errorMessage());
+		}
 		if ($this->Categoria->Required) {
 			if (!$this->Categoria->IsDetailKey && $this->Categoria->FormValue != NULL && $this->Categoria->FormValue == "") {
 				AddMessage($FormError, str_replace("%s", $this->Categoria->caption(), $this->Categoria->RequiredErrorMessage));
@@ -1314,11 +1328,6 @@ class t_libro_add extends t_libro
 		}
 		if (!CheckInteger($this->N_copias->FormValue)) {
 			AddMessage($FormError, $this->N_copias->errorMessage());
-		}
-		if ($this->Codigo_Area->Required) {
-			if (!$this->Codigo_Area->IsDetailKey && $this->Codigo_Area->FormValue != NULL && $this->Codigo_Area->FormValue == "") {
-				AddMessage($FormError, str_replace("%s", $this->Codigo_Area->caption(), $this->Codigo_Area->RequiredErrorMessage));
-			}
 		}
 
 		// Return validate result
@@ -1345,9 +1354,6 @@ class t_libro_add extends t_libro
 		}
 		$rsnew = [];
 
-		// Codigo_Libro
-		$this->Codigo_Libro->setDbValueDef($rsnew, $this->Codigo_Libro->CurrentValue, NULL, FALSE);
-
 		// Titulo
 		$this->Titulo->setDbValueDef($rsnew, $this->Titulo->CurrentValue, "", FALSE);
 
@@ -1365,6 +1371,9 @@ class t_libro_add extends t_libro
 
 		// Area
 		$this->Area->setDbValueDef($rsnew, $this->Area->CurrentValue, "", FALSE);
+
+		// Codigo_Area
+		$this->Codigo_Area->setDbValueDef($rsnew, $this->Codigo_Area->CurrentValue, 0, FALSE);
 
 		// Categoria
 		$this->Categoria->setDbValueDef($rsnew, $this->Categoria->CurrentValue, "", FALSE);

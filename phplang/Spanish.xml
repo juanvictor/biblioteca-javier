@@ -800,6 +800,9 @@
       <field id="area">
         <phrase id="fldcaption" value="Area" />
       </field>
+      <field id="codigo_area">
+        <phrase id="fldcaption" value="Codigo Area" />
+      </field>
       <field id="categoria">
         <phrase id="fldcaption" value="Categoria" />
       </field>
@@ -808,9 +811,6 @@
       </field>
       <field id="n_copias">
         <phrase id="fldcaption" value="N copias" />
-      </field>
-      <field id="codigo_area">
-        <phrase id="fldcaption" value="Codigo Area" />
       </field>
     </table>
     <table id="t_transaccion">

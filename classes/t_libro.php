@@ -33,10 +33,10 @@ class t_libro extends DbTable
 	public $Fecha_publicacion;
 	public $Edicion;
 	public $Area;
+	public $Codigo_Area;
 	public $Categoria;
 	public $Palabras_Claves;
 	public $N_copias;
-	public $Codigo_Area;
 
 	// Constructor
 	public function __construct()
@@ -121,8 +121,15 @@ class t_libro extends DbTable
 		$this->Area->Sortable = TRUE; // Allow sort
 		$this->Area->UsePleaseSelect = TRUE; // Use PleaseSelect by default
 		$this->Area->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
-		$this->Area->Lookup = new Lookup('Area', 't_area', FALSE, 'Area', ["Area","","",""], [], [], [], ["Id_area"], ["x_Codigo_Area"], '', '');
+		$this->Area->Lookup = new Lookup('Area', 't_area', FALSE, 'Area', ["Id_area","Area","",""], [], [], [], ["Id_area"], ["x_Codigo_Area"], '', '');
 		$this->fields['Area'] = &$this->Area;
+
+		// Codigo_Area
+		$this->Codigo_Area = new DbField('t_libro', 't_libro', 'x_Codigo_Area', 'Codigo_Area', '`Codigo_Area`', '`Codigo_Area`', 3, -1, FALSE, '`Codigo_Area`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->Codigo_Area->Nullable = FALSE; // NOT NULL field
+		$this->Codigo_Area->Sortable = FALSE; // Allow sort
+		$this->Codigo_Area->DefaultErrorMessage = $Language->Phrase("IncorrectInteger");
+		$this->fields['Codigo_Area'] = &$this->Codigo_Area;
 
 		// Categoria
 		$this->Categoria = new DbField('t_libro', 't_libro', 'x_Categoria', 'Categoria', '`Categoria`', '`Categoria`', 200, -1, FALSE, '`Categoria`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
@@ -147,13 +154,6 @@ class t_libro extends DbTable
 		$this->N_copias->Sortable = TRUE; // Allow sort
 		$this->N_copias->DefaultErrorMessage = $Language->Phrase("IncorrectInteger");
 		$this->fields['N_copias'] = &$this->N_copias;
-
-		// Codigo_Area
-		$this->Codigo_Area = new DbField('t_libro', 't_libro', 'x_Codigo_Area', 'Codigo_Area', '`Codigo_Area`', '`Codigo_Area`', 3, -1, FALSE, '`Codigo_Area`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->Codigo_Area->Nullable = FALSE; // NOT NULL field
-		$this->Codigo_Area->Sortable = FALSE; // Allow sort
-		$this->Codigo_Area->DefaultErrorMessage = $Language->Phrase("IncorrectInteger");
-		$this->fields['Codigo_Area'] = &$this->Codigo_Area;
 	}
 
 	// Field Visibility
@@ -504,10 +504,10 @@ class t_libro extends DbTable
 		$this->Fecha_publicacion->DbValue = $row['Fecha_publicacion'];
 		$this->Edicion->DbValue = $row['Edicion'];
 		$this->Area->DbValue = $row['Area'];
+		$this->Codigo_Area->DbValue = $row['Codigo_Area'];
 		$this->Categoria->DbValue = $row['Categoria'];
 		$this->Palabras_Claves->DbValue = $row['Palabras_Claves'];
 		$this->N_copias->DbValue = $row['N_copias'];
-		$this->Codigo_Area->DbValue = $row['Codigo_Area'];
 	}
 
 	// Delete uploaded files
@@ -741,10 +741,10 @@ class t_libro extends DbTable
 		$this->Fecha_publicacion->setDbValue($rs->fields('Fecha_publicacion'));
 		$this->Edicion->setDbValue($rs->fields('Edicion'));
 		$this->Area->setDbValue($rs->fields('Area'));
+		$this->Codigo_Area->setDbValue($rs->fields('Codigo_Area'));
 		$this->Categoria->setDbValue($rs->fields('Categoria'));
 		$this->Palabras_Claves->setDbValue($rs->fields('Palabras_Claves'));
 		$this->N_copias->setDbValue($rs->fields('N_copias'));
-		$this->Codigo_Area->setDbValue($rs->fields('Codigo_Area'));
 	}
 
 	// Render list row values
@@ -764,10 +764,10 @@ class t_libro extends DbTable
 		// Fecha_publicacion
 		// Edicion
 		// Area
+		// Codigo_Area
 		// Categoria
 		// Palabras_Claves
 		// N_copias
-		// Codigo_Area
 		// Id_libro
 
 		$this->Id_libro->ViewValue = $this->Id_libro->CurrentValue;
@@ -810,6 +810,7 @@ class t_libro extends DbTable
 				if ($rswrk && !$rswrk->EOF) { // Lookup values found
 					$arwrk = array();
 					$arwrk[1] = $rswrk->fields('df');
+					$arwrk[2] = $rswrk->fields('df2');
 					$this->Area->ViewValue = $this->Area->displayValue($arwrk);
 					$rswrk->Close();
 				} else {
@@ -820,6 +821,11 @@ class t_libro extends DbTable
 			$this->Area->ViewValue = NULL;
 		}
 		$this->Area->ViewCustomAttributes = "";
+
+		// Codigo_Area
+		$this->Codigo_Area->ViewValue = $this->Codigo_Area->CurrentValue;
+		$this->Codigo_Area->ViewValue = FormatNumber($this->Codigo_Area->ViewValue, 0, -2, -2, -2);
+		$this->Codigo_Area->ViewCustomAttributes = "";
 
 		// Categoria
 		$curVal = strval($this->Categoria->CurrentValue);
@@ -851,11 +857,6 @@ class t_libro extends DbTable
 		$this->N_copias->ViewValue = $this->N_copias->CurrentValue;
 		$this->N_copias->ViewValue = FormatNumber($this->N_copias->ViewValue, 0, -2, -2, -2);
 		$this->N_copias->ViewCustomAttributes = "";
-
-		// Codigo_Area
-		$this->Codigo_Area->ViewValue = $this->Codigo_Area->CurrentValue;
-		$this->Codigo_Area->ViewValue = FormatNumber($this->Codigo_Area->ViewValue, 0, -2, -2, -2);
-		$this->Codigo_Area->ViewCustomAttributes = "";
 
 		// Id_libro
 		$this->Id_libro->LinkCustomAttributes = "";
@@ -897,6 +898,11 @@ class t_libro extends DbTable
 		$this->Area->HrefValue = "";
 		$this->Area->TooltipValue = "";
 
+		// Codigo_Area
+		$this->Codigo_Area->LinkCustomAttributes = "";
+		$this->Codigo_Area->HrefValue = "";
+		$this->Codigo_Area->TooltipValue = "";
+
 		// Categoria
 		$this->Categoria->LinkCustomAttributes = "";
 		$this->Categoria->HrefValue = "";
@@ -911,11 +917,6 @@ class t_libro extends DbTable
 		$this->N_copias->LinkCustomAttributes = "";
 		$this->N_copias->HrefValue = "";
 		$this->N_copias->TooltipValue = "";
-
-		// Codigo_Area
-		$this->Codigo_Area->LinkCustomAttributes = "";
-		$this->Codigo_Area->HrefValue = "";
-		$this->Codigo_Area->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -978,6 +979,12 @@ class t_libro extends DbTable
 		$this->Area->EditAttrs["class"] = "form-control";
 		$this->Area->EditCustomAttributes = "";
 
+		// Codigo_Area
+		$this->Codigo_Area->EditAttrs["class"] = "form-control";
+		$this->Codigo_Area->EditCustomAttributes = "";
+		$this->Codigo_Area->EditValue = $this->Codigo_Area->CurrentValue;
+		$this->Codigo_Area->PlaceHolder = RemoveHtml($this->Codigo_Area->caption());
+
 		// Categoria
 		$this->Categoria->EditAttrs["class"] = "form-control";
 		$this->Categoria->EditCustomAttributes = "";
@@ -993,12 +1000,6 @@ class t_libro extends DbTable
 		$this->N_copias->EditCustomAttributes = "";
 		$this->N_copias->EditValue = $this->N_copias->CurrentValue;
 		$this->N_copias->PlaceHolder = RemoveHtml($this->N_copias->caption());
-
-		// Codigo_Area
-		$this->Codigo_Area->EditAttrs["class"] = "form-control";
-		$this->Codigo_Area->EditCustomAttributes = "";
-		$this->Codigo_Area->EditValue = $this->Codigo_Area->CurrentValue;
-		$this->Codigo_Area->PlaceHolder = RemoveHtml($this->Codigo_Area->caption());
 
 		// Call Row Rendered event
 		$this->Row_Rendered();

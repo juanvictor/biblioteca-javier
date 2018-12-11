@@ -714,10 +714,10 @@ class t_libro_list extends t_libro
 		$this->Fecha_publicacion->setVisibility();
 		$this->Edicion->setVisibility();
 		$this->Area->setVisibility();
+		$this->Codigo_Area->Visible = FALSE;
 		$this->Categoria->setVisibility();
 		$this->Palabras_Claves->Visible = FALSE;
 		$this->N_copias->setVisibility();
-		$this->Codigo_Area->Visible = FALSE;
 		$this->hideFieldsForAddEdit();
 
 		// Global Page Loading event (in userfn*.php)
@@ -2226,14 +2226,14 @@ class t_libro_list extends t_libro
 		$this->Edicion->OldValue = $this->Edicion->CurrentValue;
 		$this->Area->CurrentValue = NULL;
 		$this->Area->OldValue = $this->Area->CurrentValue;
+		$this->Codigo_Area->CurrentValue = NULL;
+		$this->Codigo_Area->OldValue = $this->Codigo_Area->CurrentValue;
 		$this->Categoria->CurrentValue = NULL;
 		$this->Categoria->OldValue = $this->Categoria->CurrentValue;
 		$this->Palabras_Claves->CurrentValue = NULL;
 		$this->Palabras_Claves->OldValue = $this->Palabras_Claves->CurrentValue;
 		$this->N_copias->CurrentValue = NULL;
 		$this->N_copias->OldValue = $this->N_copias->CurrentValue;
-		$this->Codigo_Area->CurrentValue = NULL;
-		$this->Codigo_Area->OldValue = $this->Codigo_Area->CurrentValue;
 	}
 
 	// Load basic search values
@@ -2504,10 +2504,10 @@ class t_libro_list extends t_libro
 		$this->Fecha_publicacion->setDbValue($row['Fecha_publicacion']);
 		$this->Edicion->setDbValue($row['Edicion']);
 		$this->Area->setDbValue($row['Area']);
+		$this->Codigo_Area->setDbValue($row['Codigo_Area']);
 		$this->Categoria->setDbValue($row['Categoria']);
 		$this->Palabras_Claves->setDbValue($row['Palabras_Claves']);
 		$this->N_copias->setDbValue($row['N_copias']);
-		$this->Codigo_Area->setDbValue($row['Codigo_Area']);
 	}
 
 	// Return a row with default values
@@ -2523,10 +2523,10 @@ class t_libro_list extends t_libro
 		$row['Fecha_publicacion'] = $this->Fecha_publicacion->CurrentValue;
 		$row['Edicion'] = $this->Edicion->CurrentValue;
 		$row['Area'] = $this->Area->CurrentValue;
+		$row['Codigo_Area'] = $this->Codigo_Area->CurrentValue;
 		$row['Categoria'] = $this->Categoria->CurrentValue;
 		$row['Palabras_Claves'] = $this->Palabras_Claves->CurrentValue;
 		$row['N_copias'] = $this->N_copias->CurrentValue;
-		$row['Codigo_Area'] = $this->Codigo_Area->CurrentValue;
 		return $row;
 	}
 
@@ -2578,10 +2578,10 @@ class t_libro_list extends t_libro
 		// Fecha_publicacion
 		// Edicion
 		// Area
+		// Codigo_Area
 		// Categoria
 		// Palabras_Claves
 		// N_copias
-		// Codigo_Area
 
 		if ($this->RowType == ROWTYPE_VIEW) { // View row
 
@@ -2626,6 +2626,7 @@ class t_libro_list extends t_libro
 					if ($rswrk && !$rswrk->EOF) { // Lookup values found
 						$arwrk = array();
 						$arwrk[1] = $rswrk->fields('df');
+						$arwrk[2] = $rswrk->fields('df2');
 						$this->Area->ViewValue = $this->Area->displayValue($arwrk);
 						$rswrk->Close();
 					} else {
@@ -3083,6 +3084,11 @@ class t_libro_list extends t_libro
 				AddMessage($FormError, str_replace("%s", $this->Area->caption(), $this->Area->RequiredErrorMessage));
 			}
 		}
+		if ($this->Codigo_Area->Required) {
+			if (!$this->Codigo_Area->IsDetailKey && $this->Codigo_Area->FormValue != NULL && $this->Codigo_Area->FormValue == "") {
+				AddMessage($FormError, str_replace("%s", $this->Codigo_Area->caption(), $this->Codigo_Area->RequiredErrorMessage));
+			}
+		}
 		if ($this->Categoria->Required) {
 			if (!$this->Categoria->IsDetailKey && $this->Categoria->FormValue != NULL && $this->Categoria->FormValue == "") {
 				AddMessage($FormError, str_replace("%s", $this->Categoria->caption(), $this->Categoria->RequiredErrorMessage));
@@ -3100,11 +3106,6 @@ class t_libro_list extends t_libro
 		}
 		if (!CheckInteger($this->N_copias->FormValue)) {
 			AddMessage($FormError, $this->N_copias->errorMessage());
-		}
-		if ($this->Codigo_Area->Required) {
-			if (!$this->Codigo_Area->IsDetailKey && $this->Codigo_Area->FormValue != NULL && $this->Codigo_Area->FormValue == "") {
-				AddMessage($FormError, str_replace("%s", $this->Codigo_Area->caption(), $this->Codigo_Area->RequiredErrorMessage));
-			}
 		}
 
 		// Return validate result

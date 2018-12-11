@@ -121,7 +121,7 @@ ew.vars = <?php echo JsonEncode($CLIENT_VAR) ?>;
 <script src="<?php echo $RELATIVE_PATH ?>phpjs/ewdatetimepicker.js"></script>
 <script src="<?php echo $RELATIVE_PATH ?>phpjs/userfn15.js"></script>
 <script>
-<div id="ewHeaderRow" class="<?php echo $gsHeaderRowClass ?>"><img src="<?php echo $EW_RELATIVE_PATH ?>/phpimages/escudo.png" alt=""></div>
+
 // Write your client script here, no need to add script tags.
 </script>
 <?php } ?>
@@ -149,8 +149,8 @@ ew.vars = <?php echo JsonEncode($CLIENT_VAR) ?>;
 	<!-- Main Sidebar Container -->
 	<aside class="<?php echo $SIDEBAR_CLASS ?>">
 		<!-- Brand Logo //** Note: Only licensed users are allowed to change the logo ** -->
-		<a href="phpimages/escudo.png" class="brand-link">
-        <span class="brand-text">BIBLIOTECA F.G.E.</span>
+		<a href="#" class="brand-link">
+			<span class="brand-text">BIBLIOTECA F.G.E.</span>
 		</a>
 		<!-- Sidebar -->
 		<div class="sidebar">

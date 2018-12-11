@@ -564,10 +564,10 @@ class t_libro_search extends t_libro
 		$this->Fecha_publicacion->setVisibility();
 		$this->Edicion->setVisibility();
 		$this->Area->setVisibility();
+		$this->Codigo_Area->Visible = FALSE;
 		$this->Categoria->setVisibility();
 		$this->Palabras_Claves->setVisibility();
 		$this->N_copias->setVisibility();
-		$this->Codigo_Area->Visible = FALSE;
 		$this->hideFieldsForAddEdit();
 
 		// Global Page Loading event (in userfn*.php)
@@ -780,10 +780,10 @@ class t_libro_search extends t_libro
 		// Fecha_publicacion
 		// Edicion
 		// Area
+		// Codigo_Area
 		// Categoria
 		// Palabras_Claves
 		// N_copias
-		// Codigo_Area
 
 		if ($this->RowType == ROWTYPE_VIEW) { // View row
 
@@ -828,6 +828,7 @@ class t_libro_search extends t_libro
 					if ($rswrk && !$rswrk->EOF) { // Lookup values found
 						$arwrk = array();
 						$arwrk[1] = $rswrk->fields('df');
+						$arwrk[2] = $rswrk->fields('df2');
 						$this->Area->ViewValue = $this->Area->displayValue($arwrk);
 						$rswrk->Close();
 					} else {

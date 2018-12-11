@@ -54,11 +54,6 @@ ft_libroadd.validate = function() {
 	for (var i = startcnt; i <= rowcnt; i++) {
 		var infix = ($k[0]) ? String(i) : "";
 		$fobj.data("rowindex", infix);
-		<?php if ($t_libro_add->Codigo_Libro->Required) { ?>
-			elm = this.getElements("x" + infix + "_Codigo_Libro");
-			if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
-				return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t_libro->Codigo_Libro->caption(), $t_libro->Codigo_Libro->RequiredErrorMessage)) ?>");
-		<?php } ?>
 		<?php if ($t_libro_add->Titulo->Required) { ?>
 			elm = this.getElements("x" + infix + "_Titulo");
 			if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
@@ -95,6 +90,14 @@ ft_libroadd.validate = function() {
 			if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
 				return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t_libro->Area->caption(), $t_libro->Area->RequiredErrorMessage)) ?>");
 		<?php } ?>
+		<?php if ($t_libro_add->Codigo_Area->Required) { ?>
+			elm = this.getElements("x" + infix + "_Codigo_Area");
+			if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
+				return this.onError(elm, "<?php echo JsEncode(str_replace("%s", $t_libro->Codigo_Area->caption(), $t_libro->Codigo_Area->RequiredErrorMessage)) ?>");
+		<?php } ?>
+			elm = this.getElements("x" + infix + "_Codigo_Area");
+			if (elm && !ew.checkInteger(elm.value))
+				return this.onError(elm, "<?php echo JsEncode($t_libro->Codigo_Area->errorMessage()) ?>");
 		<?php if ($t_libro_add->Categoria->Required) { ?>
 			elm = this.getElements("x" + infix + "_Categoria");
 			if (elm && !ew.isHidden(elm) && !ew.hasValue(elm))
@@ -164,16 +167,6 @@ $t_libro_add->showMessage();
 <input type="hidden" name="action" id="action" value="insert">
 <input type="hidden" name="modal" value="<?php echo (int)$t_libro_add->IsModal ?>">
 <div class="ew-add-div"><!-- page* -->
-<?php if ($t_libro->Codigo_Libro->Visible) { // Codigo_Libro ?>
-	<div id="r_Codigo_Libro" class="form-group row">
-		<label id="elh_t_libro_Codigo_Libro" for="x_Codigo_Libro" class="<?php echo $t_libro_add->LeftColumnClass ?>"><?php echo $t_libro->Codigo_Libro->caption() ?><?php echo ($t_libro->Codigo_Libro->Required) ? $Language->Phrase("FieldRequiredIndicator") : "" ?></label>
-		<div class="<?php echo $t_libro_add->RightColumnClass ?>"><div<?php echo $t_libro->Codigo_Libro->cellAttributes() ?>>
-<span id="el_t_libro_Codigo_Libro">
-<input type="text" data-table="t_libro" data-field="x_Codigo_Libro" name="x_Codigo_Libro" id="x_Codigo_Libro" size="30" maxlength="12" placeholder="<?php echo HtmlEncode($t_libro->Codigo_Libro->getPlaceHolder()) ?>" value="<?php echo $t_libro->Codigo_Libro->EditValue ?>"<?php echo $t_libro->Codigo_Libro->editAttributes() ?>>
-</span>
-<?php echo $t_libro->Codigo_Libro->CustomMsg ?></div></div>
-	</div>
-<?php } ?>
 <?php if ($t_libro->Titulo->Visible) { // Titulo ?>
 	<div id="r_Titulo" class="form-group row">
 		<label id="elh_t_libro_Titulo" for="x_Titulo" class="<?php echo $t_libro_add->LeftColumnClass ?>"><?php echo $t_libro->Titulo->caption() ?><?php echo ($t_libro->Titulo->Required) ? $Language->Phrase("FieldRequiredIndicator") : "" ?></label>
@@ -234,6 +227,7 @@ ew.createDateTimePicker("ft_libroadd", "x_Fecha_publicacion", {"ignoreReadonly":
 		<label id="elh_t_libro_Area" for="x_Area" class="<?php echo $t_libro_add->LeftColumnClass ?>"><?php echo $t_libro->Area->caption() ?><?php echo ($t_libro->Area->Required) ? $Language->Phrase("FieldRequiredIndicator") : "" ?></label>
 		<div class="<?php echo $t_libro_add->RightColumnClass ?>"><div<?php echo $t_libro->Area->cellAttributes() ?>>
 <span id="el_t_libro_Area">
+<?php $t_libro->Area->EditAttrs["onchange"] = "ew.autoFill(this);" . @$t_libro->Area->EditAttrs["onchange"]; ?>
 <div class="input-group">
 	<select class="custom-select ew-custom-select" data-table="t_libro" data-field="x_Area" data-value-separator="<?php echo $t_libro->Area->displayValueSeparatorAttribute() ?>" id="x_Area" name="x_Area"<?php echo $t_libro->Area->editAttributes() ?>>
 		<?php echo $t_libro->Area->selectOptionListHtml("x_Area") ?>
@@ -243,6 +237,16 @@ ew.createDateTimePicker("ft_libroadd", "x_Fecha_publicacion", {"ignoreReadonly":
 </div>
 </span>
 <?php echo $t_libro->Area->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($t_libro->Codigo_Area->Visible) { // Codigo_Area ?>
+	<div id="r_Codigo_Area" class="form-group row">
+		<label id="elh_t_libro_Codigo_Area" for="x_Codigo_Area" class="<?php echo $t_libro_add->LeftColumnClass ?>"><?php echo $t_libro->Codigo_Area->caption() ?><?php echo ($t_libro->Codigo_Area->Required) ? $Language->Phrase("FieldRequiredIndicator") : "" ?></label>
+		<div class="<?php echo $t_libro_add->RightColumnClass ?>"><div<?php echo $t_libro->Codigo_Area->cellAttributes() ?>>
+<span id="el_t_libro_Codigo_Area">
+<input type="text" data-table="t_libro" data-field="x_Codigo_Area" name="x_Codigo_Area" id="x_Codigo_Area" size="30" placeholder="<?php echo HtmlEncode($t_libro->Codigo_Area->getPlaceHolder()) ?>" value="<?php echo $t_libro->Codigo_Area->EditValue ?>"<?php echo $t_libro->Codigo_Area->editAttributes() ?>>
+</span>
+<?php echo $t_libro->Codigo_Area->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($t_libro->Categoria->Visible) { // Categoria ?>
