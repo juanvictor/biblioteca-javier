@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configuration date="2018/11/15" author="e.World Technology Ltd.">
+  <project id="{E6872B47-A984-4C9A-BBE6-E4ECB78C3960}" file="C:\Users\HDCOMPUTERS\Documents\PHPMaker\Projects\BIBLIOTECA.pmp" name="BIBLIOTECA" product="PHPMaker" version="15.0" datetime="2018/11/15 10:52:42" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;">
+    <table id="t_categoria" name="t.categoria" caption="t.categoria" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="t_area" name="t_area" caption="t area" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="t_lector" name="t_lector" caption="t lector" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="t_libro" name="t_libro" caption="Libro" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="t_transaccion" name="t_transaccion" caption="Prestamo - Devoluciones" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="Report1" name="Report1" caption="CATALOGO DE LIBROS - FISCALIA GENERAL DEL ESTADO" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="prestado" name="prestado" caption="prestado" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="Libros_Prestado" name="Libros Prestado" caption="Libros Prestado" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+    <table id="Catalogo" name="Catalogo" caption="Catalogo" userlevel="-2,&quot;Anonymous&quot;,0;" priv="1" />
+  </project>
+</configuration>

@@ -1,68 +1,36 @@
-<!DOCTYPE html>
 <?php
-	session_start();
-	if(ISSET($_SESSION['admin_id'])){
-		header('location:home.php');
-	}
+namespace PHPMaker2019\BIBLIOTECA;
+
+// Session
+if (session_status() !== PHP_SESSION_ACTIVE)
+	session_start(); // Init session data
+
+// Output buffering
+ob_start(); 
+
+// Autoload
+include_once "autoload.php";
 ?>
-<html lang = "eng">
-	<head>
-		<title></title>
-		<meta charset = "utf-8" />
-		<meta name = "viewport" content = "width=device-width, initial-scale=1" />
-		<link rel = "stylesheet" type = "text/css" href = "css/bootstrap.css" />
-	</head>
-	<body style = "background-color:#d3d3d3;">
-		<nav class = "navbar navbar-default navbar-fixed-top">
-			<div class = "container-fluid">
-				<div class = "navbar-header">
-					<img src = "images/logo.png" width = "50px" height = "50px" />
-					<h4 class = "navbar-text navbar-right"></h4>
-				</div>
-			</div>
-		</nav>
-		<div class = "container-fluid" style = "margin-top:70px;">
-			<div class = "col-lg-3 well">
-				<br />
-				<br />
-				<h4>Autentificacion de Usuarios..</h4>
-				<hr style = "border:1px solid #d3d3d3; width:100%;" />
-				<form enctype = "multipart/form-data">
-					<div id = "username_warning" class = "form-group">
-						<label class = "control-label">Nombre de Usuario:</label>
-						<input type = "text" class = "form-control" id = "username"/>
-					</div>
-					<div id = "password_warning" class = "form-group">
-						<label class = "control-label">Contraseña:</label>
-						<input type = "password" class = "form-control" id = "password"/>
-					</div>
-					<br />
-					<div class = "form-group">
-						<button type = "button" id = "login" class = "btn btn-primary btn-block"><span class = "glyphicon glyphicon-save"></span> Entrar</button>
-					</div>
-				</form>
-				<div id = "result"></div>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-			</div>
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-8 well">
-				<center>
-				<img src = "images/back2.png" height = "449px" width = "50%" />
-			</center>
-			</div>
-		</div>
-		<nav class = "navbar navbar-default navbar-fixed-bottom">
-			<div class = "container-fluid">
-				<label class = "navbar-text pull-right"> &copy;  2018</label>
-			</div>
-		</nav>
-	</body>
-	<script src = "js/jquery.js"></script>
-	<script src = "js/bootstrap.js"></script>
-	<script src = "js/login.js"></script>
-</html>
+<?php
+
+// Write header
+WriteHeader(FALSE);
+
+// Create page object
+$index = new index();
+
+// Run the page
+$index->run();
+
+// Setup login status
+SetupLoginStatus();
+SetClientVar("login", LoginStatus());
+?>
+<?php include_once "header.php" ?>
+<?php
+$index->showMessage();
+?>
+<?php include_once "footer.php" ?>
+<?php
+$index->terminate();
+?>
